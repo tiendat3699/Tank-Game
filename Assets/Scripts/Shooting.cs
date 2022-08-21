@@ -31,23 +31,24 @@ public class Shooting : MonoBehaviour
         yield return new WaitForSeconds (waitBeforeNextShot);
         shootAble = true;
     }
-    public void Shoot (Transform poinOfView, bool isPlayer, int accuracy = 5)
+    public void Shoot (Ray rayOrigin, bool isPlayer = true, int accuracy = 5)
     {
         if (shootAble) {
             shootAble = false;
             RaycastHit Hit;
             var tracer = Instantiate(TracerBullet, barrelEnd.position, Quaternion.identity);
             tracer.AddPosition(barrelEnd.position);
-            Vector3 direction;
-            if(isPlayer){
-                direction = poinOfView.forward;
-            } else {
-                direction = getRandomDirection(poinOfView.forward, accuracy);
+            Ray finalRay = rayOrigin;
+
+            if(!isPlayer){
+                Ray newRay = rayOrigin;
+                newRay.direction = getRandomDirection(newRay.direction, accuracy);
+                finalRay = newRay;
             }
-            GetComponent<Rigidbody>().AddForce(-barrelEnd.forward * 0.5f, ForceMode.VelocityChange);
-            if(Physics.Raycast(poinOfView.position, direction, out Hit, range)) {
+            GetComponent<Rigidbody>().AddForce(-barrelEnd.forward * 0.2f, ForceMode.VelocityChange);
+            if(Physics.Raycast(finalRay, out Hit, range)) {
                 GameObject Effect =  Instantiate (HitEffect, Hit.point, Quaternion.LookRotation(Hit.normal));
-                if(Hit.rigidbody) {
+                if(Hit.rigidbody && Hit.transform.tag != transform.tag) {
                     Hit.rigidbody.AddForce(-Hit.normal * 2f, ForceMode.VelocityChange);
                     Target target = Hit.transform.GetComponent<Target>();
                     if(target && target.isActiveAndEnabled) {

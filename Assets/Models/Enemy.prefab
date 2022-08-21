@@ -1,5 +1,36 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &542387535
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 542387536}
+  m_Layer: 0
+  m_Name: ShootPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &542387536
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542387535}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.99}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4553234675690357380}
+  m_RootOrder: 2
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &587253435861215813
 GameObject:
   m_ObjectHideFlags: 0
@@ -15010,6 +15041,7 @@ Transform:
   m_Children:
   - {fileID: 2811865342337661006}
   - {fileID: 2811865342759829265}
+  - {fileID: 542387536}
   m_Father: {fileID: 1963437798651171618}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -15168,7 +15200,7 @@ GameObject:
   - component: {fileID: 2811865344378333946}
   m_Layer: 0
   m_Name: Enemy
-  m_TagString: Untagged
+  m_TagString: Emeny
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -15321,9 +15353,11 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   PlayerTransform: {fileID: 0}
+  ShootPoint: {fileID: 542387536}
   SignRange: 20
   AttackRange: 12
   WalkPointRange: 10
+  accuracy: 5
 --- !u!114 &2811865344378333921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15346,7 +15380,7 @@ MonoBehaviour:
   bulletSpeed: 300
   despawnTime: 3
   shootAble: 1
-  waitBeforeNextShot: 1
+  waitBeforeNextShot: 2
 --- !u!195 &2811865344378333945
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -15383,6 +15417,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DeadTank: {fileID: 3759657045396152029, guid: 2f85ccfd75bb3d34c830975ddee98671,
     type: 3}
+  health: 50
+  immortal: 0
 --- !u!1 &5758882864137931803
 GameObject:
   m_ObjectHideFlags: 0

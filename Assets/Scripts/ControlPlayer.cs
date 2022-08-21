@@ -66,7 +66,8 @@ public class ControlPlayer : MonoBehaviour
         cannonTransform.eulerAngles = rotAngles;
 
         if (Input.GetKey (KeyCode.Mouse0)) {
-            GetComponent<Shooting>().Shoot(Cam.transform, true);
+            Ray ray = new Ray(Cam.transform.position, Cam.transform.forward);
+            GetComponent<Shooting>().Shoot(ray);
         }
 
 

@@ -68,7 +68,8 @@ public class EnemyAI : MonoBehaviour
     private void HandleAttack() {
         agent.SetDestination(transform.position);
         transform.LookAt(PlayerTransform);
-        GetComponent<Shooting>().Shoot(ShootPoint, false, accuracy);
+        Ray ray = new Ray(ShootPoint.position, ShootPoint.forward);
+        GetComponent<Shooting>().Shoot(ray, false, accuracy);
     }
 
     private Vector3 GetRandomWalkPoint() {
