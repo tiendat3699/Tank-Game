@@ -4822,7 +4822,7 @@ PrefabInstance:
     - target: {fileID: 1153093373755847779, guid: a30540c41d7d5ed4281d72b4916afb5e,
         type: 3}
       propertyPath: m_Name
-      value: TankFree_Blue
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 1153093373755847779, guid: a30540c41d7d5ed4281d72b4916afb5e,
         type: 3}

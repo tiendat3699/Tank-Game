@@ -5,9 +5,7 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public Transform target;
-    public Crosshair CrossHair;
     private Vector3 tankVector3;
-
     private Transform Obstruction;
     // Start is called before the first frame update
     void Start()
