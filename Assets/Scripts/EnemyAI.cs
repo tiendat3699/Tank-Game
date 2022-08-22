@@ -6,26 +6,27 @@ using UnityEngine.AI;
 public class EnemyAI : MonoBehaviour
 {
     // Start is called before the first frame update
-    public LayerMask Ground, Player;
+    public LayerMask Player;
     public Transform PlayerTransform;
     public Transform ShootPoint;
+    [SerializeField]
     public float SignRange;
     public float AttackRange;
-    [Range(5, 100)]
-    public float WalkPointRange = 10;
     [Range(1,3)]
     public int accuracy = 2;
     public float limitTimeChase = 2f;
     private bool PlayerInSignRange, PlayerInAttackRange;
     private NavMeshAgent agent;
     private float timeChase;
+    private Vector3 walkPoint;
 
     private void Awake() {
         agent = GetComponent<NavMeshAgent>();
     }
     void Start()
     {
-        
+        walkPoint = GetRandomWalkPoint();
+
     }
 
     // Update is called once per frame
@@ -57,15 +58,11 @@ public class EnemyAI : MonoBehaviour
     }
 
     private void HandlePatrolling() {
-        Vector3 direction;
-        if(Physics.Raycast(transform.position, transform.forward, WalkPointRange)) {
-            Vector3 point = GetRandomWalkPoint();
-            direction = point - transform.position;
-            transform.rotation = Quaternion.LookRotation(direction);
-        } else {
-            direction =  transform.forward;
+        agent.SetDestination(walkPoint);
+        if(Vector3.Distance(transform.position,walkPoint) <=2) {
+            walkPoint = GetRandomWalkPoint();
         }
-        transform.Translate(direction * 5f * Time.deltaTime);
+
     }
     private void HandleChase() {
         agent.SetDestination(PlayerTransform.position);
@@ -78,16 +75,8 @@ public class EnemyAI : MonoBehaviour
     }
 
     private Vector3 GetRandomWalkPoint() {
-        bool invalidWalkPoint = true;
-        Vector3 walkPoint = transform.position;
-        while(invalidWalkPoint) {
-            float randomZ = Random.Range(-WalkPointRange, WalkPointRange);
-            float randomX = Random.Range(-WalkPointRange, WalkPointRange);
-            walkPoint = new Vector3(transform.position.x + randomX, transform.position.y, transform.position.z + randomZ);
-            if(Physics.Raycast(walkPoint, -Vector3.up, 2f, Ground)) {
-                invalidWalkPoint = false;
-            };
-        }
-        return walkPoint;
+        List<Transform> ListWalkPoint =  GameManager.Instance.GetListWalkPoint();
+        int walkPointInd = Random.Range(0,ListWalkPoint.Count);
+        return ListWalkPoint[walkPointInd].position;
     }
 }

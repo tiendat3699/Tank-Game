@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public Text HealthText;
     private int _score = 0;
     private float _health = 0;
+    private List<Transform> _listWalkPoint = new List<Transform>();
 
     // Start is called before the first frame update
     private void Awake() {
@@ -44,6 +45,14 @@ public class GameManager : MonoBehaviour
 
     public float getHealthVal() {
        return _health; 
+    }
+
+    public void SetWalkPoint(Transform walkPoint) {
+        _listWalkPoint.Add(walkPoint);
+    }
+
+    public List<Transform> GetListWalkPoint() {
+        return _listWalkPoint;
     }
 
 }
