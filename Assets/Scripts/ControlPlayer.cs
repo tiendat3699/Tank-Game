@@ -26,7 +26,7 @@ public class ControlPlayer : MonoBehaviour
 
     public Transform BackRightWheelTransform,BackLeftWheelTransform,FrontRightWheelTransform, FrontLeftWheelTransform;
     public WheelCollider BackRightWheelCollider,BackLeftWheelCollider,FrontRightWheelCollider, FrontLeftWheelCollider;
-    public Camera Cam;
+    public Transform Cam;
 
     public GameObject SmokeEffectLeft;
     public GameObject SmokeEffectRight;
@@ -43,7 +43,7 @@ public class ControlPlayer : MonoBehaviour
     }
     void Start()
     {
-        
+        GameManager.Instance.SetPlayer(gameObject);
     }
 
     // Update is called once per frame
@@ -66,7 +66,8 @@ public class ControlPlayer : MonoBehaviour
         cannonTransform.eulerAngles = rotAngles;
 
         if (Input.GetKey (KeyCode.Mouse0)) {
-            Ray ray = new Ray(Cam.transform.position, Cam.transform.forward);
+            Transform camT = Cam.GetComponent<CameraFollow>().GetTransformCam();
+            Ray ray = new Ray(camT.position, camT.forward);
             GetComponent<Shooting>().Shoot(ray);
         }
 

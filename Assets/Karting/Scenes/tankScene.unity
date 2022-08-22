@@ -6140,6 +6140,7 @@ MonoBehaviour:
     type: 3}
   TracerBullet: {fileID: 3522940242952499055, guid: 43ec27c1d918158418576af2056389af,
     type: 3}
+  Bullet: {fileID: 8763242038308560818, guid: 3a199d8c465c295499540cbb2dce7f43, type: 3}
   range: 100
   damage: 20
   bulletSpeed: 300
@@ -16350,7 +16351,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1207105320
 MonoBehaviour:
@@ -25539,7 +25540,7 @@ RectTransform:
   - {fileID: 705141538}
   - {fileID: 1787468054}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -39673,7 +39674,7 @@ PrefabInstance:
     - target: {fileID: 2042733062417270269, guid: 993d2f3ed51454869af0023769df26ed,
         type: 3}
       propertyPath: m_RootOrder
-      value: 5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 2042733062417270269, guid: 993d2f3ed51454869af0023769df26ed,
         type: 3}
@@ -39829,7 +39830,7 @@ PrefabInstance:
     - target: {fileID: 3337719950185742122, guid: 0c901844120484d4697fe260839143b3,
         type: 3}
       propertyPath: m_RootOrder
-      value: 15
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 3337719950185742122, guid: 0c901844120484d4697fe260839143b3,
         type: 3}

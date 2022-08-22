@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     private int _score = 0;
     private float _health = 0;
     private List<Transform> _listWalkPoint = new List<Transform>();
+    private GameObject _player;
 
     // Start is called before the first frame update
     private void Awake() {
@@ -53,6 +54,14 @@ public class GameManager : MonoBehaviour
 
     public List<Transform> GetListWalkPoint() {
         return _listWalkPoint;
+    }
+
+    public void SetPlayer(GameObject player) {
+        _player = player;
+    }
+
+    public GameObject getPlayer() {
+        return _player;
     }
 
 }

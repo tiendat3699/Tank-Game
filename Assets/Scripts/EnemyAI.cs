@@ -7,7 +7,6 @@ public class EnemyAI : MonoBehaviour
 {
     // Start is called before the first frame update
     public LayerMask Player;
-    public Transform PlayerTransform;
     public Transform ShootPoint;
     [SerializeField]
     public float SignRange;
@@ -19,6 +18,7 @@ public class EnemyAI : MonoBehaviour
     private NavMeshAgent agent;
     private float timeChase;
     private Vector3 walkPoint;
+    private Transform PlayerTransform;
 
     private void Awake() {
         agent = GetComponent<NavMeshAgent>();
@@ -26,6 +26,7 @@ public class EnemyAI : MonoBehaviour
     void Start()
     {
         walkPoint = GetRandomWalkPoint();
+        PlayerTransform = GameManager.Instance.getPlayer().transform;
 
     }
 
