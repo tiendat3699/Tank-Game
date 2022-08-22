@@ -13,11 +13,12 @@ public class EnemyAI : MonoBehaviour
     public float AttackRange;
     [Range(5, 100)]
     public float WalkPointRange = 10;
-    [Range(1,10)]
-    public int accuracy = 10;
+    [Range(1,3)]
+    public int accuracy = 2;
+    public float limitTimeChase = 2f;
     private bool PlayerInSignRange, PlayerInAttackRange;
-
     private NavMeshAgent agent;
+    private float timeChase;
 
     private void Awake() {
         agent = GetComponent<NavMeshAgent>();
@@ -30,6 +31,7 @@ public class EnemyAI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        timeChase = timeChase<=limitTimeChase?timeChase+Time.time:0;
         bool PlayerCanSee = false;
         PlayerInSignRange = Physics.CheckSphere(transform.position, SignRange, Player);
         PlayerInAttackRange = Physics.CheckSphere(transform.position, AttackRange, Player);
@@ -37,8 +39,9 @@ public class EnemyAI : MonoBehaviour
         Vector3 direction  = (PlayerTransform.position - transform.position);
         RaycastHit target;
         if(Physics.Raycast(transform.position, direction, out target, SignRange)) {
-            PlayerCanSee = target.transform.gameObject.layer == LayerMask.NameToLayer("Player");
+            PlayerCanSee = target.transform.gameObject.layer == LayerMask.NameToLayer("Player") && timeChase <= limitTimeChase;
         }
+        
 
         if(!PlayerInSignRange && !PlayerInAttackRange || !PlayerCanSee) {
             HandlePatrolling();
@@ -54,13 +57,15 @@ public class EnemyAI : MonoBehaviour
     }
 
     private void HandlePatrolling() {
-        Vector3 point = GetRandomWalkPoint();
-        Vector3 distance = transform.position - point;
-        while(distance.magnitude < 1f) {
-            point = GetRandomWalkPoint();
-            distance = transform.position - point;
+        Vector3 direction;
+        if(Physics.Raycast(transform.position, transform.forward, WalkPointRange)) {
+            Vector3 point = GetRandomWalkPoint();
+            direction = point - transform.position;
+            transform.rotation = Quaternion.LookRotation(direction);
+        } else {
+            direction =  transform.forward;
         }
-        agent.SetDestination(point);
+        transform.Translate(direction * 5f * Time.deltaTime);
     }
     private void HandleChase() {
         agent.SetDestination(PlayerTransform.position);

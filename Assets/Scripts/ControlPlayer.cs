@@ -94,10 +94,16 @@ public class ControlPlayer : MonoBehaviour
                 FrontLeftWheelCollider.motorTorque = VerticalInput * speed;
                 FrontRightWheelCollider.motorTorque = VerticalInput * speed;
             }
-            FrontLeftWheelCollider.brakeTorque = 0;
-            FrontRightWheelCollider.brakeTorque = 0;
-            BackLeftWheelCollider.brakeTorque = 0;
-            BackRightWheelCollider.brakeTorque = 0;
+
+            if(VerticalInput == 0 && HorizontalInput == 0) {
+                FrontLeftWheelCollider.brakeTorque = 800f;
+                FrontRightWheelCollider.brakeTorque = 800f;
+            } else {
+                FrontLeftWheelCollider.brakeTorque = 0;
+                FrontRightWheelCollider.brakeTorque = 0;
+                BackLeftWheelCollider.brakeTorque = 0;
+                BackRightWheelCollider.brakeTorque = 0;
+            }
         }
 
         activeEffect();

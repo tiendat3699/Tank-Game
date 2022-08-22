@@ -45,6 +45,7 @@ public class Shooting : MonoBehaviour
                 newRay.direction = getRandomDirection(newRay.direction, accuracy);
                 finalRay = newRay;
             }
+            
             GetComponent<Rigidbody>().AddForce(-barrelEnd.forward * 0.2f, ForceMode.VelocityChange);
             if(Physics.Raycast(finalRay, out Hit, range)) {
                 GameObject Effect =  Instantiate (HitEffect, Hit.point, Quaternion.LookRotation(Hit.normal));
@@ -66,7 +67,7 @@ public class Shooting : MonoBehaviour
     }
 
     private Vector3 getRandomDirection(Vector3 directionOrigin, int accuracy) {
-        float range = (float)accuracy/10;
+        float range = (float)(accuracy+7)/10;
         range = 1.0f - range;
         float y  = Random.Range(-range,range);
         float x = Random.Range(-range,range);
