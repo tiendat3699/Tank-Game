@@ -43,35 +43,19 @@ public class ControlPlayer : MonoBehaviour
     }
     void Start()
     {
-        GameManager.Instance.SetPlayer(gameObject);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        float y = rotateSpeedMouse * Input.GetAxis("Mouse X");
-        rotationYCanon += rotateSpeedMouse * Input.GetAxis("Mouse Y");
-
-        VerticalInput = Input.GetAxis("Vertical");
-        HorizontalInput = Input.GetAxis("Horizontal");
-
-        turret.transform.Rotate(0, y, 0);
-
-        var cannonTransform = turret.transform.GetChild(0).transform;
-
-        rotationYCanon = Mathf.Clamp(rotationYCanon, rotateXRangeMin, rotateXRangeMax);
-
-        Vector3 rotAngles = cannonTransform.eulerAngles;
-        rotAngles.x = Mathf.MoveTowards(rotAngles.x, -rotationYCanon, rotateSpeed);
-        cannonTransform.eulerAngles = rotAngles;
-
+        controlCanon();
+        
         if (Input.GetKey (KeyCode.Mouse0)) {
             Transform camT = Cam.GetComponent<CameraFollow>().GetTransformCam();
             Ray ray = new Ray(camT.position, camT.forward);
             GetComponent<Shooting>().Shoot(ray);
         }
-
-
 
         isBraking = Input.GetKey(KeyCode.Space);
     }
@@ -81,29 +65,18 @@ public class ControlPlayer : MonoBehaviour
         // rigidbodyTank.AddForce(transform.forward * VerticalInput);
 
         if(isBraking) {
-            FrontLeftWheelCollider.brakeTorque = brakeForce;
-            FrontRightWheelCollider.brakeTorque = brakeForce;
-            BackLeftWheelCollider.brakeTorque = brakeForce;
-            BackRightWheelCollider.brakeTorque = brakeForce;
+            brake(brakeForce);
         } else {
             if(HorizontalInput != 0) {
-                FrontLeftWheelCollider.motorTorque = HorizontalInput * rotateSpeed;
-                FrontRightWheelCollider.motorTorque = -HorizontalInput * rotateSpeed;
-                BackLeftWheelCollider.motorTorque = HorizontalInput * rotateSpeed;
-                BackRightWheelCollider.motorTorque = -HorizontalInput * rotateSpeed;
+                turn();
             } else {
-                FrontLeftWheelCollider.motorTorque = VerticalInput * speed;
-                FrontRightWheelCollider.motorTorque = VerticalInput * speed;
+                MoveToward();
             }
 
             if(VerticalInput == 0 && HorizontalInput == 0) {
-                FrontLeftWheelCollider.brakeTorque = 800f;
-                FrontRightWheelCollider.brakeTorque = 800f;
+                brake(400f);
             } else {
-                FrontLeftWheelCollider.brakeTorque = 0;
-                FrontRightWheelCollider.brakeTorque = 0;
-                BackLeftWheelCollider.brakeTorque = 0;
-                BackRightWheelCollider.brakeTorque = 0;
+                brake(0);
             }
         }
 
@@ -134,6 +107,43 @@ public class ControlPlayer : MonoBehaviour
             SmokeEffectRight.GetComponent<ParticleSystem>().Play();
             SmokeEffectLeft.GetComponent<ParticleSystem>().Play();
         }
+    }
+
+    private void controlCanon() {
+        float y = rotateSpeedMouse * Input.GetAxis("Mouse X");
+        rotationYCanon += rotateSpeedMouse * Input.GetAxis("Mouse Y");
+
+        VerticalInput = Input.GetAxis("Vertical");
+        HorizontalInput = Input.GetAxis("Horizontal");
+
+        turret.transform.Rotate(0, y, 0);
+
+        var cannonTransform = turret.transform.GetChild(0).transform;
+
+        rotationYCanon = Mathf.Clamp(rotationYCanon, rotateXRangeMin, rotateXRangeMax);
+
+        Vector3 rotAngles = cannonTransform.eulerAngles;
+        rotAngles.x = Mathf.MoveTowards(rotAngles.x, -rotationYCanon, rotateSpeed);
+        cannonTransform.eulerAngles = rotAngles;
+    }
+
+    private void brake(float brakeForce) {
+        FrontLeftWheelCollider.brakeTorque = brakeForce;
+        FrontRightWheelCollider.brakeTorque = brakeForce;
+        BackLeftWheelCollider.brakeTorque = brakeForce;
+        BackRightWheelCollider.brakeTorque = brakeForce;
+    }
+
+    private void turn() {
+        FrontLeftWheelCollider.motorTorque = HorizontalInput * rotateSpeed;
+        FrontRightWheelCollider.motorTorque = -HorizontalInput * rotateSpeed;
+        BackLeftWheelCollider.motorTorque = HorizontalInput * rotateSpeed;
+        BackRightWheelCollider.motorTorque = -HorizontalInput * rotateSpeed;
+    }
+
+    private void MoveToward() {
+        FrontLeftWheelCollider.motorTorque = VerticalInput * speed;
+        FrontRightWheelCollider.motorTorque = VerticalInput * speed;
     }
 
 }

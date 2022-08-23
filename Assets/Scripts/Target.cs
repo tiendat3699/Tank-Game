@@ -12,10 +12,11 @@ public class Target : MonoBehaviour
     private bool immortal = false;
     public ParticleSystem smokeEffect;
     private GameManager gameManager;
-    private float InitHealth;
+    private float _InitHealth;
+    private bool _getHit = false;
 
     private void Awake() {
-        InitHealth = health;
+        _InitHealth = health;
     }
     void Start()
     {
@@ -38,6 +39,7 @@ public class Target : MonoBehaviour
                 gameManager.setScore(Score, gameObject);
             }
         }
+        _getHit = true;
     } 
 
     private void die(Vector3 vector) {
@@ -53,10 +55,18 @@ public class Target : MonoBehaviour
     }
 
     private void activeEffectLowHp() {
-        if(health <= InitHealth/2) {
+        if(health <= _InitHealth/2) {
             smokeEffect.Play();
         } else {
             smokeEffect.Pause();
         }
+    }
+
+    public bool GetHit() {
+        return _getHit;
+    }
+
+    public void ResetHit() {
+        _getHit = false;
     }
 }

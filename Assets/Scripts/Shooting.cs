@@ -6,6 +6,7 @@ public class Shooting : MonoBehaviour
 {
     public Transform barrelEnd;
     public GameObject HitEffect;
+    public GameObject MissEffect;
     public TrailRenderer TracerBullet;
     public float range = 50f;
     public float damage = 10f;
@@ -32,7 +33,7 @@ public class Shooting : MonoBehaviour
         shootAble = true;
     }
     public void Shoot (Ray rayOrigin, bool isPlayer = true, int accuracy = 5)
-    {
+    {   
         if (shootAble) {
             shootAble = false;
             RaycastHit Hit;
@@ -48,17 +49,20 @@ public class Shooting : MonoBehaviour
             
             GetComponent<Rigidbody>().AddForce(-barrelEnd.forward * 0.2f, ForceMode.VelocityChange);
             if(Physics.Raycast(finalRay, out Hit, range)) {
-                GameObject Effect =  Instantiate (HitEffect, Hit.point, Quaternion.LookRotation(Hit.normal));
+                GameObject hitShot = Instantiate (HitEffect, Hit.point, Quaternion.LookRotation(Hit.normal));
                 if(Hit.rigidbody && Hit.transform.tag != transform.tag) {
                     Hit.rigidbody.AddForce(-Hit.normal * 2f, ForceMode.VelocityChange);
                     Target target = Hit.transform.GetComponent<Target>();
                     if(target && target.isActiveAndEnabled) {
                         Hit.transform.GetComponent<Target>().TakeDamage(damage,-Hit.normal);
                     }
-
                 }
-                Destroy(Effect,2f);
+                Destroy(hitShot,2f);
+            } else {
+                GameObject missShot = Instantiate (MissEffect, finalRay.GetPoint(range), Quaternion.LookRotation(finalRay.origin));
+                Destroy(missShot,2f);
             }
+
             tracer.transform.Translate(barrelEnd.forward * bulletSpeed * Time.deltaTime);
 
             barrelEnd.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
