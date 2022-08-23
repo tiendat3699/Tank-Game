@@ -5,12 +5,14 @@ using UnityEngine;
 public class CameraFollow : MonoBehaviour
 {
     public Transform target;
+    public GameObject MainCam;
+    public GameObject SecondCam;
     private Vector3 tankVector3;
-    private Transform Obstruction;
+    private Transform CamT;
+
     // Start is called before the first frame update
     void Start()
     {
-        Obstruction = target;
         tankVector3 = target.transform.position - transform.position;
     }
 
@@ -26,14 +28,21 @@ public class CameraFollow : MonoBehaviour
 
     private void ViewObstructed() {
         RaycastHit hit;
-        if(Physics.Linecast(transform.position, target.position, out hit)) {
+        if(Physics.Linecast(MainCam.transform.position, target.position, out hit)) {
             if(hit.transform.gameObject.tag != "Player") {
-                Obstruction = hit.transform;
-                Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
+                SecondCam.SetActive(true);
+                MainCam.SetActive(false);
+                CamT = SecondCam.transform;
             } else{
-                Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
+                SecondCam.SetActive(false);
+                MainCam.SetActive(true);
+                CamT = MainCam.transform;
             }
         }
+    }
+
+    public Transform GetTransformCam() {
+        return CamT;
     }
 
 }

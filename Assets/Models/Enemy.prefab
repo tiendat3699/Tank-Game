@@ -15347,9 +15347,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59fd54484b7ea1e4292e6de3ad396d3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Ground:
-    serializedVersion: 2
-    m_Bits: 512
   Player:
     serializedVersion: 2
     m_Bits: 128
@@ -15357,7 +15354,6 @@ MonoBehaviour:
   ShootPoint: {fileID: 542387536}
   SignRange: 23
   AttackRange: 15
-  WalkPointRange: 5
   accuracy: 2
   limitTimeChase: 0
 --- !u!114 &2811865344378333921
@@ -15377,6 +15373,7 @@ MonoBehaviour:
     type: 3}
   TracerBullet: {fileID: 3522940242952499055, guid: 43ec27c1d918158418576af2056389af,
     type: 3}
+  Bullet: {fileID: 8763242038308560818, guid: d2b4c2c56a865104babbbfb7ce7a791d, type: 3}
   range: 100
   damage: 10
   bulletSpeed: 300
@@ -15392,7 +15389,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 3964677239301294235}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 1.81
+  m_Radius: 2.2
   m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
