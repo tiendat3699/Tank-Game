@@ -22,10 +22,10 @@ public class EnemyAI : MonoBehaviour
     private bool PlayerCanSee = false;
     private bool DetectPlayer= false;
     private bool getHit = false;
-    const string PATROLL = "patroll";
-    const string LOOKING = "looking";
-    const string CHASE = "chase";
-    const string ATTACK = "attack";
+    private const string PATROLL = "patroll";
+    private const string LOOKING = "looking";
+    private const string CHASE = "chase";
+    private const string ATTACK = "attack";
     
 
     private void Awake() {

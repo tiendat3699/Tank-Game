@@ -11,10 +11,8 @@ public class Shooting : MonoBehaviour
     public float range = 50f;
     public float damage = 10f;
     public float bulletSpeed = 300f;
-    public float despawnTime = 3.0f;
     public bool shootAble = true;
     public float waitBeforeNextShot = 0.25f;
-    private Transform targetT;
     
     // Start is called before the first frame update
     void Start()
@@ -49,7 +47,7 @@ public class Shooting : MonoBehaviour
             
             GetComponent<Rigidbody>().AddForce(-barrelEnd.forward * 0.2f, ForceMode.VelocityChange);
             if(Physics.Raycast(finalRay, out Hit, range)) {
-                GameObject hitShot = Instantiate (HitEffect, Hit.point, Quaternion.LookRotation(Hit.normal));
+                GameObject hitShot = Instantiate(HitEffect, Hit.point, Quaternion.LookRotation(Hit.normal));
                 if(Hit.rigidbody && Hit.transform.tag != transform.tag) {
                     Hit.rigidbody.AddForce(-Hit.normal * 2f, ForceMode.VelocityChange);
                     Target target = Hit.transform.GetComponent<Target>();

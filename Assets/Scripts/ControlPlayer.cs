@@ -49,7 +49,7 @@ public class ControlPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        controlCanon();
+        controlCannon();
         
         if (Input.GetKey (KeyCode.Mouse0)) {
             Transform camT = Cam.GetComponent<CameraFollow>().GetTransformCam();
@@ -74,7 +74,7 @@ public class ControlPlayer : MonoBehaviour
             }
 
             if(VerticalInput == 0 && HorizontalInput == 0) {
-                brake(400f);
+                brakeFront(800f);
             } else {
                 brake(0);
             }
@@ -109,7 +109,7 @@ public class ControlPlayer : MonoBehaviour
         }
     }
 
-    private void controlCanon() {
+    private void controlCannon() {
         float y = rotateSpeedMouse * Input.GetAxis("Mouse X");
         rotationYCanon += rotateSpeedMouse * Input.GetAxis("Mouse Y");
 
@@ -132,6 +132,11 @@ public class ControlPlayer : MonoBehaviour
         FrontRightWheelCollider.brakeTorque = brakeForce;
         BackLeftWheelCollider.brakeTorque = brakeForce;
         BackRightWheelCollider.brakeTorque = brakeForce;
+    }
+
+    private void brakeFront(float brakeForce) {
+        FrontLeftWheelCollider.brakeTorque = brakeForce;
+        FrontRightWheelCollider.brakeTorque = brakeForce;
     }
 
     private void turn() {
