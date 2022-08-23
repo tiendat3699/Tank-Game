@@ -27,7 +27,9 @@ public class detroyed : MonoBehaviour
 
     IEnumerator PlaySmoke(float time) {
         yield return new WaitForSeconds(time);
-        Smoke.Play();
+        if(Smoke.isStopped) {
+            Smoke.Play();
+        }
         Destroy(gameObject, 10f);
     }
 

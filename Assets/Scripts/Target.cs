@@ -56,9 +56,13 @@ public class Target : MonoBehaviour
 
     private void activeEffectLowHp() {
         if(health <= _InitHealth/2) {
-            smokeEffect.Play();
+            if(smokeEffect.isStopped) {
+                smokeEffect.Play();
+            }
         } else {
-            smokeEffect.Pause();
+            if(smokeEffect.isPlaying) {
+                smokeEffect.Stop();
+            }
         }
     }
 

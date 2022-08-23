@@ -104,8 +104,12 @@ public class ControlPlayer : MonoBehaviour
         bool activeSmokeEffect = (Mathf.Abs(HorizontalInput) > 0.3f || isBraking ) && isRotating;
 
         if(activeSmokeEffect) {
-            SmokeEffectRight.GetComponent<ParticleSystem>().Play();
-            SmokeEffectLeft.GetComponent<ParticleSystem>().Play();
+            if(SmokeEffectRight.GetComponent<ParticleSystem>().isStopped) {
+                SmokeEffectRight.GetComponent<ParticleSystem>().Play();
+            }
+            if(SmokeEffectLeft.GetComponent<ParticleSystem>().isStopped) {
+                SmokeEffectLeft.GetComponent<ParticleSystem>().Play();
+            }
         }
     }
 

@@ -2,16 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    public Text ScoreText;
-    public Text HealthText;
     private int _score = 0;
     private float _health = 0;
     private List<Transform> _listWalkPoint = new List<Transform>();
     private GameObject _player;
+    public UnityEvent<int> updateScore;
+    public UnityEvent<float> updateHealth;
 
     // Start is called before the first frame update
     private void Awake() {
@@ -23,25 +24,27 @@ public class GameManager : MonoBehaviour
     }
     private void Start()
     {
-
+        updateHealth?.Invoke(_health);
+        updateScore?.Invoke(_score);
     }
 
     // Update is called once per frame
     private void Update()
     {
-        ScoreText.text = "Score:" + _score;
+
     }
 
     public void setScore(int score, GameObject gameObj) {
         if(gameObj.tag != "Player") {
             _score += score;
-            ScoreText.text = "Score:" + _score;
+            updateScore?.Invoke(_score);
         }
     }
 
     public void setHealth(float health) {
         _health = health;
-        HealthText.text = "HP:" + (int)_health;
+        updateHealth?.Invoke(_health);
+
     }
 
     public float getHealthVal() {

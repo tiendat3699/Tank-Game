@@ -20,12 +20,14 @@ public class EnemyAI : MonoBehaviour
     private Vector3 walkPoint;
     private Transform PlayerTransform;
     private bool PlayerCanSee = false;
-    private bool DetectPlayer= false;
+    private bool DetectedPlayer= false;
     private bool getHit = false;
-    private const string PATROLL = "patroll";
-    private const string LOOKING = "looking";
-    private const string CHASE = "chase";
-    private const string ATTACK = "attack";
+    private enum StateType {
+        PATROLL,
+        LOOKING,
+        CHASE,
+        ATTACK
+    }
     
 
     private void Awake() {
@@ -43,19 +45,19 @@ public class EnemyAI : MonoBehaviour
     {
 
         getHit = transform.GetComponent<Target>().GetHit();
-        DoAction(LOOKING);
+        DoAction(StateType.LOOKING);
 
-        if(!DetectPlayer && !getHit) {
+        if(!DetectedPlayer && !getHit) {
             if(!PlayerInSignRange && !PlayerInAttackRange) {
-                DoAction(PATROLL);
+                DoAction(StateType.PATROLL);
             }
         }
-        if(DetectPlayer) {
+        if(DetectedPlayer) {
             if(PlayerInSignRange && !PlayerInAttackRange) {
-                DoAction(CHASE);
+                DoAction(StateType.CHASE);
             }
             if(PlayerInAttackRange && PlayerInAttackRange){
-                DoAction(ATTACK);
+                DoAction(StateType.ATTACK);
             }
         }
     }
@@ -74,13 +76,13 @@ public class EnemyAI : MonoBehaviour
         Vector3 direction  = (PlayerTransform.position - transform.position);
         RaycastHit target;
 
-        if(getHit) {
+        if(getHit && !DetectedPlayer) {
             agent.SetDestination(PlayerTransform.position);
         }
 
         if(Physics.Raycast(transform.position, direction, out target, SignRange)) {
             PlayerCanSee = target.transform.gameObject.layer == LayerMask.NameToLayer("Player");
-            DetectPlayer = PlayerCanSee;
+            DetectedPlayer = PlayerCanSee;
             StartCoroutine(StartLooking());
         }
     } 
@@ -103,18 +105,18 @@ public class EnemyAI : MonoBehaviour
     }
 
 
-    private void DoAction(string state) {
+    private void DoAction(StateType state) {
         switch (state) {
-            case PATROLL:
+            case StateType.PATROLL:
                 HandlePatrolling();
                 break;
-            case LOOKING:
+            case StateType.LOOKING:
                 HandleLooking();
                 break;
-            case CHASE:
+            case StateType.CHASE:
                 HandleChase();
                 break;
-            case ATTACK:
+            case StateType.ATTACK:
                 HandleAttack();
                 break;
         }
@@ -123,9 +125,9 @@ public class EnemyAI : MonoBehaviour
     IEnumerator StartLooking() {
         yield return new WaitForSeconds(limitTimeLooking);
         if(PlayerCanSee) {
-            DoAction(LOOKING);
+            DoAction(StateType.LOOKING);
         } else {
-            DetectPlayer = false;
+            DetectedPlayer = false;
             transform.GetComponent<Target>().ResetHit();
         }
     }
