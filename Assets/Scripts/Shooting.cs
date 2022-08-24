@@ -7,7 +7,6 @@ public class Shooting : MonoBehaviour
     public Transform barrelEnd;
     public GameObject HitEffect;
     public GameObject MissEffect;
-    public TrailRenderer TracerBullet;
     public float range = 50f;
     public float damage = 10f;
     public float bulletSpeed = 300f;
@@ -25,43 +24,60 @@ public class Shooting : MonoBehaviour
     {
 
     }
+
+    private void OnDestroy() {
+        StopAllCoroutines();
+    }
+
     IEnumerator ShootingYield ()
     {
         yield return new WaitForSeconds (waitBeforeNextShot);
         shootAble = true;
     }
-    public void Shoot (Ray rayOrigin, bool isPlayer = true, int accuracy = 5)
+
+    public void PlayerShoot(Ray rayOrigin)
     {   
         if (shootAble) {
             shootAble = false;
             RaycastHit Hit;
-            var tracer = Instantiate(TracerBullet, barrelEnd.position, Quaternion.identity);
-            tracer.AddPosition(barrelEnd.position);
-            Ray finalRay = rayOrigin;
-
-            if(!isPlayer){
-                Ray newRay = rayOrigin;
-                newRay.direction = getRandomDirection(newRay.direction, accuracy);
-                finalRay = newRay;
-            }
-            
             GetComponent<Rigidbody>().AddForce(-barrelEnd.forward * 0.2f, ForceMode.VelocityChange);
-            if(Physics.Raycast(finalRay, out Hit, range)) {
+            if(Physics.Raycast(rayOrigin, out Hit, range)) {
                 GameObject hitShot = Instantiate(HitEffect, Hit.point, Quaternion.LookRotation(Hit.normal));
                 if(Hit.rigidbody && Hit.transform.tag != transform.tag) {
                     Hit.rigidbody.AddForce(-Hit.normal * 2f, ForceMode.VelocityChange);
-                    Target target = Hit.transform.GetComponent<Target>();
-                    if(target && target.isActiveAndEnabled) {
-                        Hit.transform.GetComponent<Target>().TakeDamage(damage,-Hit.normal);
-                    }
+                    Hit.transform.GetComponent<Enemy>().TakeDamage(damage,-Hit.normal);
                 }
                 Destroy(hitShot,2f);
             } else {
-                GameObject missShot = Instantiate (MissEffect, finalRay.GetPoint(range), Quaternion.LookRotation(finalRay.origin));
+                GameObject missShot = Instantiate (MissEffect, rayOrigin.GetPoint(range), Quaternion.LookRotation(rayOrigin.origin));
                 Destroy(missShot,2f);
             }
 
-            tracer.transform.Translate(barrelEnd.forward * bulletSpeed * Time.deltaTime);
+            barrelEnd.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
+            StartCoroutine (ShootingYield ());
+        }
+    }
+
+    public void EnemyShoot(Ray rayOrigin, int accuracy = 5)
+    {   
+        if (shootAble) {
+            shootAble = false;
+            RaycastHit Hit;
+            Ray newRay = rayOrigin;
+            newRay.direction = getRandomDirection(newRay.direction, accuracy);
+            
+            GetComponent<Rigidbody>().AddForce(-barrelEnd.forward * 0.2f, ForceMode.VelocityChange);
+            if(Physics.Raycast(newRay, out Hit, range)) {
+                GameObject hitShot = Instantiate(HitEffect, Hit.point, Quaternion.LookRotation(Hit.normal));
+                if(Hit.rigidbody && Hit.transform.tag != transform.tag) {
+                    Hit.rigidbody.AddForce(-Hit.normal * 2f, ForceMode.VelocityChange);
+                    Hit.transform.GetComponent<Player>().TakeDamage(damage,-Hit.normal);
+                }
+                Destroy(hitShot,2f);
+            } else {
+                GameObject missShot = Instantiate (MissEffect, newRay.GetPoint(range), Quaternion.LookRotation(newRay.origin));
+                Destroy(missShot,2f);
+            }
 
             barrelEnd.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
             StartCoroutine (ShootingYield ());

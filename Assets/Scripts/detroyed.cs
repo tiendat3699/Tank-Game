@@ -30,7 +30,7 @@ public class detroyed : MonoBehaviour
         if(Smoke.isStopped) {
             Smoke.Play();
         }
-        Destroy(gameObject, 10f);
+        Destroy(gameObject, 5f);
     }
 
 }

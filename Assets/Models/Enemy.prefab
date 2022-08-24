@@ -15197,7 +15197,7 @@ GameObject:
   - component: {fileID: 2811865344378333920}
   - component: {fileID: 2811865344378333921}
   - component: {fileID: 2811865344378333945}
-  - component: {fileID: 2811865344378333946}
+  - component: {fileID: -8716863627882682165}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Emeny
@@ -15351,10 +15351,10 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   ShootPoint: {fileID: 542387536}
-  SignRange: 23
+  SignRange: 20
   AttackRange: 15
   accuracy: 2
-  limitTimeChase: 0
+  limitTimeLooking: 2
 --- !u!114 &2811865344378333921
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15372,14 +15372,11 @@ MonoBehaviour:
     type: 3}
   MissEffect: {fileID: 4273731400015556161, guid: 315338dacacc714449327714ae589ac7,
     type: 3}
-  TracerBullet: {fileID: 3522940242952499055, guid: 43ec27c1d918158418576af2056389af,
-    type: 3}
   range: 20
   damage: 10
   bulletSpeed: 300
-  despawnTime: 3
   shootAble: 1
-  waitBeforeNextShot: 2
+  waitBeforeNextShot: 3
 --- !u!195 &2811865344378333945
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -15390,7 +15387,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 2.2
-  m_Speed: 5
+  m_Speed: 4
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -15402,7 +15399,7 @@ NavMeshAgent:
   m_BaseOffset: 0.6259148
   m_WalkableMask: 1
   m_ObstacleAvoidanceType: 4
---- !u!114 &2811865344378333946
+--- !u!114 &-8716863627882682165
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -15411,15 +15408,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3964677239301294235}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bcfce58bdb561aa4c976c9f747ee2068, type: 3}
+  m_Script: {fileID: 11500000, guid: feafdee8f86959c419fec30686387103, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   DeadTank: {fileID: 3759657045396152029, guid: 2f85ccfd75bb3d34c830975ddee98671,
     type: 3}
   health: 50
-  Score: 100
   immortal: 0
   smokeEffect: {fileID: 561573161702643483}
+  Score: 100
 --- !u!1 &5758882864137931803
 GameObject:
   m_ObjectHideFlags: 0

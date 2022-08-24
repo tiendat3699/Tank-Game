@@ -11,10 +11,10 @@ public class TextScore : MonoBehaviour
     // Start is called before the first frame update
     private void Awake() {
         scoreText = GetComponent<Text>();
+        GameManager.Instance.onUpdateScore.AddListener(UpdateScore);
     }
     void Start()
     {
-        GameManager.Instance.updateScore.AddListener(UpdateScore);
     }
 
     // Update is called once per frame

@@ -54,7 +54,7 @@ public class ControlPlayer : MonoBehaviour
         if (Input.GetKey (KeyCode.Mouse0)) {
             Transform camT = Cam.GetComponent<CameraFollow>().GetTransformCam();
             Ray ray = new Ray(camT.position, camT.forward);
-            GetComponent<Shooting>().Shoot(ray);
+            GetComponent<Shooting>().PlayerShoot(ray);
         }
 
         isBraking = Input.GetKey(KeyCode.Space);
