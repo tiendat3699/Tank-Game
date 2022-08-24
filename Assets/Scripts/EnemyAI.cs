@@ -15,6 +15,8 @@ public class EnemyAI : MonoBehaviour
     [Range(1,3)]
     public int accuracy = 2;
     public float limitTimeLooking = 2f;
+    [SerializeField]
+    private Animator runAnimation;
     private bool PlayerInSignRange, PlayerInAttackRange;
     private NavMeshAgent agent;
     private Vector3 walkPoint;
@@ -22,6 +24,7 @@ public class EnemyAI : MonoBehaviour
     private bool PlayerCanSee = false;
     private bool DetectedPlayer= false;
     private bool getHit = false;
+    private Vector3 lastPosition;
     private enum StateType {
         PATROLL,
         LOOKING,
@@ -38,11 +41,15 @@ public class EnemyAI : MonoBehaviour
         walkPoint = GetRandomWalkPoint();
         PlayerTransform = GameManager.Instance.getPlayer().transform;
 
+        lastPosition = transform.position;
+
     }
 
     // Update is called once per frame
     void Update()
     {
+
+        activeAnimationRun();
 
         getHit = transform.GetComponent<Enemy>().GetHit();
         DoAction(StateType.LOOKING);
@@ -60,7 +67,6 @@ public class EnemyAI : MonoBehaviour
                 DoAction(StateType.ATTACK);
             }
         }
-
     }
 
     private void OnDestroy() {
@@ -110,6 +116,18 @@ public class EnemyAI : MonoBehaviour
         List<Transform> ListWalkPoint =  GameManager.Instance.GetListWalkPoint();
         int walkPointInd = UnityEngine.Random.Range(0,(ListWalkPoint.Count));
         return ListWalkPoint[walkPointInd].position;
+    }
+
+    private void activeAnimationRun() {
+
+        if(Vector3.Distance(transform.position, lastPosition) > 0.01f) {
+            Debug.Log("running");
+            runAnimation.SetTrigger("Run");
+        } else {
+            runAnimation.SetTrigger("Stop");
+            Debug.Log("stop");
+        }
+        lastPosition = transform.position;
     }
 
 
