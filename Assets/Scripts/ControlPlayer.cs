@@ -51,7 +51,7 @@ public class ControlPlayer : MonoBehaviour
     {
         controlCannon();
         
-        if (Input.GetKey (KeyCode.Mouse0)) {
+        if (Input.GetKey(KeyCode.Mouse0)) {
             Transform camT = Cam.GetComponent<CameraFollow>().GetTransformCam();
             Ray ray = new Ray(camT.position, camT.forward);
             GetComponent<Shooting>().PlayerShoot(ray);

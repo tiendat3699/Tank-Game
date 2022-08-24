@@ -10,12 +10,21 @@ public class Crosshair : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        // transform.position = FollowTarget.position;
+        if(Input.GetMouseButtonDown(0)) {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+
+        if(Input.GetButton("Menu")) {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
     }
 }

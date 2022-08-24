@@ -94,7 +94,7 @@ public class GameManager : MonoBehaviour
     public void UpdateEnemiesDetroyed() {
         _enemiesCurrent -= 1;
         onUpdateEnemiesDetroyed?.Invoke(_enemiesCurrent);
-        if(_enemiesAmount <= maxEnemiesAmount) {
+        if(_enemiesAmount < maxEnemiesAmount) {
             StartCoroutine(AutoSpawnEnemyYield());
         }
     }

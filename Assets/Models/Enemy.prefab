@@ -15351,8 +15351,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   ShootPoint: {fileID: 542387536}
-  SignRange: 20
-  AttackRange: 15
+  SignRange: 28
+  AttackRange: 20
   accuracy: 2
   limitTimeLooking: 2
 --- !u!114 &2811865344378333921
@@ -15372,11 +15372,11 @@ MonoBehaviour:
     type: 3}
   MissEffect: {fileID: 4273731400015556161, guid: 315338dacacc714449327714ae589ac7,
     type: 3}
-  range: 20
+  range: 30
   damage: 10
   bulletSpeed: 300
   shootAble: 1
-  waitBeforeNextShot: 3
+  waitBeforeNextShot: 2
 --- !u!195 &2811865344378333945
 NavMeshAgent:
   m_ObjectHideFlags: 0

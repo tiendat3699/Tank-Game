@@ -9,6 +9,7 @@ public class Enemy : Target
     // Start is called before the first frame update
 
     private void Start() {
+        gameManager.UpdateEnemiesAmount();
         gameManager.UpdateEnemieCurrent();
     }
 
