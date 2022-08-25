@@ -8,7 +8,7 @@ public class Enemy : Target
     private bool _getHit = false;
     // Start is called before the first frame update
 
-    private void Start() {
+    protected override void InitStart() {
         gameManager.UpdateEnemiesAmount();
         gameManager.UpdateEnemieCurrent();
     }

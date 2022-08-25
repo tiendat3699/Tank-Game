@@ -121,11 +121,13 @@ public class EnemyAI : MonoBehaviour
     private void activeAnimationRun() {
 
         if(Vector3.Distance(transform.position, lastPosition) > 0.01f) {
-            Debug.Log("running");
-            runAnimation.SetTrigger("Run");
+            if(Vector3.Dot(transform.forward, transform.position - lastPosition ) >= 0.01f) {
+                runAnimation.SetTrigger("Forward");
+            } else if(Vector3.Dot(transform.forward, transform.position - lastPosition ) <= -0.01f) {
+                runAnimation.SetTrigger("Backward");;
+            }
         } else {
             runAnimation.SetTrigger("Stop");
-            Debug.Log("stop");
         }
         lastPosition = transform.position;
     }

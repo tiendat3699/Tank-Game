@@ -8,7 +8,7 @@ public class Player : Target
 {
     // Start is called before the first frame update
     public UnityEvent<float> onTakeDamage;
-    void Start()
+    protected override void InitStart()
     {
         gameManager.SetPlayer(gameObject);
         gameManager.setHealth(health);

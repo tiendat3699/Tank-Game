@@ -40,12 +40,19 @@ public class Shooting : MonoBehaviour
         if (shootAble) {
             shootAble = false;
             RaycastHit Hit;
+            barrelEnd.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
+            SoundManager.Instance.play3DSound(barrelEnd.gameObject, Sounds.shootSound);
+
             GetComponent<Rigidbody>().AddForce(-barrelEnd.forward * 0.2f, ForceMode.VelocityChange);
             if(Physics.Raycast(rayOrigin, out Hit, range)) {
                 GameObject hitShot = Instantiate(HitEffect, Hit.point, Quaternion.LookRotation(Hit.normal));
+                SoundManager.Instance.play3DSound(hitShot, Sounds.hitSound);
+
                 if(Hit.rigidbody && Hit.transform.tag != transform.tag) {
                     Hit.rigidbody.AddForce(-Hit.normal * 2f, ForceMode.VelocityChange);
-                    Hit.transform.GetComponent<Enemy>().TakeDamage(damage,-Hit.normal);
+                    if(Hit.transform.tag == "Enemy") {
+                        Hit.transform.GetComponent<Enemy>().TakeDamage(damage,-Hit.normal);
+                    }
                 }
                 Destroy(hitShot,2f);
             } else {
@@ -53,7 +60,6 @@ public class Shooting : MonoBehaviour
                 Destroy(missShot,2f);
             }
 
-            barrelEnd.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
             StartCoroutine (ShootingYield ());
         }
     }
@@ -65,10 +71,14 @@ public class Shooting : MonoBehaviour
             RaycastHit Hit;
             Ray newRay = rayOrigin;
             newRay.direction = getRandomDirection(newRay.direction, accuracy);
-            
+            barrelEnd.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
+            SoundManager.Instance.play3DSound(barrelEnd.gameObject, Sounds.shootSound);
+
             GetComponent<Rigidbody>().AddForce(-barrelEnd.forward * 0.2f, ForceMode.VelocityChange);
             if(Physics.Raycast(newRay, out Hit, range)) {
                 GameObject hitShot = Instantiate(HitEffect, Hit.point, Quaternion.LookRotation(Hit.normal));
+                SoundManager.Instance.play3DSound(hitShot, Sounds.hitSound);
+
                 if(Hit.rigidbody && Hit.transform.tag != transform.tag) {
                     Hit.rigidbody.AddForce(-Hit.normal * 2f, ForceMode.VelocityChange);
                     Hit.transform.GetComponent<Player>().TakeDamage(damage,-Hit.normal);
@@ -79,7 +89,6 @@ public class Shooting : MonoBehaviour
                 Destroy(missShot,2f);
             }
 
-            barrelEnd.transform.GetChild(0).GetComponent<ParticleSystem>().Play();
             StartCoroutine (ShootingYield ());
         }
     }

@@ -22,6 +22,7 @@ public class detroyed : MonoBehaviour
         GetComponent<Rigidbody>().AddForce(transform.up * 5f + vector * 10f, ForceMode.VelocityChange);
         transform.GetChild(0).GetComponent<Rigidbody>().AddForce(transform.up * 5f + vector * 10f,ForceMode.VelocityChange);
         Explore.Play();
+        SoundManager.Instance.play3DSound(gameObject, Sounds.explosionSound);
         StartCoroutine(PlaySmoke(Explore.main.duration));
     }
 

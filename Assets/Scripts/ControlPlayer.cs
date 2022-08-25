@@ -37,13 +37,17 @@ public class ControlPlayer : MonoBehaviour
 
     private float VerticalInput;
     private float HorizontalInput;
+    private AudioSource audioSource; 
+    private AudioSource audioSourceRuning; 
+    private AudioSource audioSourceDrift; 
 
     private void Awake() {
         rigidbodyTank = GetComponent<Rigidbody>();
     }
     void Start()
     {
-
+        audioSource = GetComponent<Player>().audioComp;
+        InitEffectSound();
     }
 
     // Update is called once per frame
@@ -58,18 +62,18 @@ public class ControlPlayer : MonoBehaviour
         }
 
         isBraking = Input.GetKey(KeyCode.Space);
+
+        activeSound();
     }
 
     private void FixedUpdate() {
-        
-        // rigidbodyTank.AddForce(transform.forward * VerticalInput);
 
         if(isBraking) {
             brake(brakeForce);
         } else {
             if(HorizontalInput != 0) {
                 turn();
-            } else {
+            } else if(VerticalInput != 0) {
                 MoveToward();
             }
 
@@ -81,6 +85,7 @@ public class ControlPlayer : MonoBehaviour
         }
 
         activeEffect();
+        
 
         UpdateWheelPose(FrontLeftWheelCollider, FrontLeftWheelTransform);
         UpdateWheelPose(FrontRightWheelCollider, FrontRightWheelTransform);
@@ -100,7 +105,7 @@ public class ControlPlayer : MonoBehaviour
     }
 
     private void activeEffect() {
-        var isRotating = FrontRightWheelCollider.rpm + FrontLeftWheelCollider.rpm  > 0;
+        var isRotating = FrontRightWheelCollider.rpm + FrontLeftWheelCollider.rpm > 0;
         bool activeSmokeEffect = (Mathf.Abs(HorizontalInput) > 0.3f || isBraking ) && isRotating;
 
         if(activeSmokeEffect) {
@@ -153,6 +158,45 @@ public class ControlPlayer : MonoBehaviour
     private void MoveToward() {
         FrontLeftWheelCollider.motorTorque = VerticalInput * speed;
         FrontRightWheelCollider.motorTorque = VerticalInput * speed;
+    }
+
+    private void activeSound() {
+        if((Mathf.Abs(VerticalInput)) > 0) {
+            audioSource.volume = 0f;
+            audioSourceDrift.volume = 0f;
+            audioSourceRuning.volume = Mathf.Clamp(Mathf.Abs(VerticalInput) , 0f, 0.6f);
+        } else if(Mathf.Abs(HorizontalInput) > 0) {
+            audioSource.volume = 0f;
+            audioSourceDrift.volume = 0f;
+            audioSourceRuning.volume = Mathf.Clamp(Mathf.Abs(HorizontalInput), 0f, 0.5f);
+        } else {
+            audioSource.volume = 0.8f;
+            audioSourceDrift.volume = 0f;
+            audioSourceRuning.volume = 0f;
+        }
+
+        if( isBraking && FrontRightWheelCollider.rpm + FrontLeftWheelCollider.rpm > 0) {
+            audioSource.volume = 0.8f;
+            audioSourceRuning.volume = 0f;
+            audioSourceDrift.volume = 0.1f;
+        }
+    }
+
+    private void InitEffectSound() {
+        audioSourceRuning = SoundManager.Instance.add3DSound(gameObject,true);
+        audioSourceDrift = SoundManager.Instance.add3DSound(gameObject,true);
+
+        audioSourceRuning.clip = SoundManager.Instance.getAudioInResources(Sounds.engineRunning);
+        audioSourceDrift.clip = SoundManager.Instance.getAudioInResources(Sounds.TireScreeching);
+
+        audioSourceRuning.volume = 0f;
+        audioSourceDrift.volume = 0f;
+        audioSourceRuning.playOnAwake = false;
+        audioSourceDrift.playOnAwake = false;
+        audioSourceRuning.loop = true;
+        audioSourceDrift.loop = true;
+        audioSourceRuning.Play();
+        audioSourceDrift.Play();
     }
 
 }

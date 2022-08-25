@@ -14,12 +14,20 @@ public class Target : MonoBehaviour
     public ParticleSystem smokeEffect;
     protected GameManager gameManager;
     private float _InitHealth;
+    [HideInInspector]
+    public AudioSource audioComp;
 
     private void Awake() {
         gameManager = GameManager.Instance;
         _InitHealth = health;
+
+        InitAudioEngine();
     }
 
+    private void Start() {
+        InitAudioEngine();
+        InitStart();
+    }
 
     // Update is called once per frame
     void Update()
@@ -52,5 +60,18 @@ public class Target : MonoBehaviour
                 smokeEffect.Stop();
             }
         }
+    }
+
+    protected virtual void InitStart() {
+
+    }
+
+    protected virtual void InitAudioEngine() {
+        audioComp = SoundManager.Instance.add3DSound(gameObject);
+        AudioClip audio = SoundManager.Instance.getAudioInResources(Sounds.engineIdle);
+        audioComp.loop = true;
+        audioComp.playOnAwake = true;
+        audioComp.clip = audio;
+        audioComp.Play();
     }
 }

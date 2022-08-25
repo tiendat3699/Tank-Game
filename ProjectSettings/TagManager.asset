@@ -4,10 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Emeny
   - Obstructed
   - Wall
   - WalkPoint
+  - Enemy
+  - Audio3D
   layers:
   - Default
   - TransparentFX
