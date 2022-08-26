@@ -9,10 +9,12 @@ public class Player : Target
     // Start is called before the first frame update
     [HideInInspector]
     public UnityEvent<float> onTakeDamage;
+    public ParticleSystem healingEffect;
     protected override void InitStart()
     {
         gameManager.SetPlayer(gameObject);
         gameManager.setHealth(health);
+        gameManager.setInitHealth(health);
     }
 
     public override void TakeDamage(float damage, Vector3 vector) {
@@ -30,5 +32,11 @@ public class Player : Target
         gameObject.SetActive(false);
         GameObject deadBody = Instantiate(DeadTank, transform.position, transform.rotation);
         deadBody.GetComponent<detroyed>().explode(vector);
+    }
+
+    public void healing(float healing) {
+        health = healing;
+        gameManager.setHealth(healing);
+        healingEffect.Play();
     }
 }

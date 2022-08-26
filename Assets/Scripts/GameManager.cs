@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     public GameObject[] listEnemy;
+    public GameObject[] listItem;
     public int maxEnemiesAmount;
     private int _enemiesAmount = 0;
     private int _enemiesCurrent = 0;
@@ -16,6 +17,7 @@ public class GameManager : MonoBehaviour
     private float _health = 0;
     private List<Transform> _listWalkPoint = new List<Transform>();
     private List<Transform> _listSpawnPoint = new List<Transform>();
+    private List<Transform> _listItemPoint = new List<Transform>();
     private GameObject _player;
     [HideInInspector]
     public UnityEvent<int> onUpdateScore;
@@ -34,7 +36,9 @@ public class GameManager : MonoBehaviour
     [HideInInspector]
     public UnityEvent onReset;
     private int timeCount = 3;
+    private bool alreadyHaveItem = false;
     private bool isWin;
+    private float initHealth;
 
     // Start is called before the first frame update
     private void Awake() {
@@ -71,6 +75,11 @@ public class GameManager : MonoBehaviour
             isWin = false;
             onGameover?.Invoke(isWin);
         }
+
+        if(!alreadyHaveItem && SceneManager.GetActiveScene().name == "tankScene") {
+            alreadyHaveItem = true;
+            StartCoroutine(AutoSpawnItemYield());
+        }
     }
 
     private void OnDestroy() {
@@ -96,8 +105,10 @@ public class GameManager : MonoBehaviour
         _enemiesDetroyed = 0;
         _score = 0;
         timeCount = 3;
+        alreadyHaveItem = false;
         _listWalkPoint.Clear();
         _listSpawnPoint.Clear();
+        _listItemPoint.Clear();
         Instance.enabled = true;
         onReset?.Invoke();
     }
@@ -114,12 +125,18 @@ public class GameManager : MonoBehaviour
     public void setHealth(float health) {
         _health = health;
         onUpdateHealth?.Invoke(_health);
+    }
 
+    public void setInitHealth(float health) {
+        initHealth = health;
+    }
+
+    public float getInitHealth() {
+        return initHealth;
     }
 
     public float getHealth() {
         return _health;
-
     }
 
     public void SetWalkPoint(Transform walkPoint) {
@@ -137,6 +154,15 @@ public class GameManager : MonoBehaviour
 
     public List<Transform> GetSpawnPoint() {
         return _listSpawnPoint;
+    }
+
+    public void SetItemPoint(Transform ItemPoint) {
+        _listItemPoint.Add(ItemPoint);
+    }
+
+
+    public List<Transform> GetListItemPoint() {
+        return _listItemPoint;
     }
 
     public void UpdateEnemiesAmount() {
@@ -177,6 +203,19 @@ public class GameManager : MonoBehaviour
         int enemyIndex = Random.Range(0, listEnemy.Length);
         int spawnPointIndex = Random.Range(0, _listSpawnPoint.Count);
         Instantiate(listEnemy[enemyIndex], _listSpawnPoint[spawnPointIndex].position, _listSpawnPoint[spawnPointIndex].rotation);
+        
+    }
+
+    private void AddRandomItem() {
+        int itemIndex = Random.Range(0, listItem.Length);
+        int spawnPointIndex = Random.Range(0, _listItemPoint.Count);
+        Vector3 pos = _listItemPoint[spawnPointIndex].position;
+        pos.y = 1.5f;
+        GameObject item = Instantiate(listItem[itemIndex], pos, _listItemPoint[spawnPointIndex].rotation);
+    }
+
+    public void ResetItem() {
+        alreadyHaveItem = false;
     }
     
     IEnumerator AutoSpawnEnemyYield() {
@@ -196,5 +235,10 @@ public class GameManager : MonoBehaviour
             timeCount -= 1;
             startCountTime();
         }
+    }
+
+    IEnumerator AutoSpawnItemYield() {
+        yield return new WaitForSeconds(10f);
+        AddRandomItem();
     }
 }

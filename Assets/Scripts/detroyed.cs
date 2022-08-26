@@ -31,7 +31,9 @@ public class detroyed : MonoBehaviour
         if(Smoke.isStopped) {
             Smoke.Play();
         }
-        Destroy(gameObject, 5f);
+        if(!(gameObject.tag == "player")) {
+            Destroy(gameObject, 5f);
+        }
     }
 
 }

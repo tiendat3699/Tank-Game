@@ -10,7 +10,8 @@ public enum Sounds {
     engineRunning,
     Notification,
     StartSound01,
-    StartSound02
+    StartSound02,
+    healspell
 }
 
 [RequireComponent(typeof(AudioSource))]

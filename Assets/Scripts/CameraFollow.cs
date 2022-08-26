@@ -7,9 +7,16 @@ public class CameraFollow : MonoBehaviour
     public Transform target;
     public GameObject MainCam;
     public GameObject SecondCam;
+    public GameObject DeadGame;
     private Vector3 tankVector3;
     private Transform CamT;
 
+    private void Awake() {
+        GameManager.Instance.onGameover.AddListener((win)=> {
+            SecondCam.SetActive(win);
+            MainCam.SetActive(false);
+        });
+    }
     // Start is called before the first frame update
     void Start()
     {
