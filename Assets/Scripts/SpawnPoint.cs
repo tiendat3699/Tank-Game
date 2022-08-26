@@ -24,8 +24,10 @@ public class SpawnPoint : MonoBehaviour
     }
 
     private void startSpawnEnemy() {
-        int enemyIndex = Random.Range(0, listEnemy.Length - 1);
-        Instantiate(listEnemy[enemyIndex], transform.position, transform.rotation);
+        if(!(gameManager.GetSpawnPoint().IndexOf(transform) > gameManager.maxEnemiesAmount - 1)) {
+            int enemyIndex = Random.Range(0, listEnemy.Length - 1);
+            Instantiate(listEnemy[enemyIndex], transform.position, transform.rotation);
+        }
     }
 
 

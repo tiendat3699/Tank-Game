@@ -15379,7 +15379,7 @@ MonoBehaviour:
   damage: 10
   bulletSpeed: 300
   shootAble: 1
-  waitBeforeNextShot: 1.8
+  waitBeforeNextShot: 2
 --- !u!195 &2811865344378333945
 NavMeshAgent:
   m_ObjectHideFlags: 0
