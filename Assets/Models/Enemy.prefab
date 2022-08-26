@@ -15353,7 +15353,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 128
   ShootPoint: {fileID: 542387536}
-  SignRange: 28
+  SignRange: 30
   AttackRange: 20
   accuracy: 2
   limitTimeLooking: 2
@@ -15375,11 +15375,11 @@ MonoBehaviour:
     type: 3}
   MissEffect: {fileID: 4273731400015556161, guid: 315338dacacc714449327714ae589ac7,
     type: 3}
-  range: 30
+  range: 20
   damage: 10
   bulletSpeed: 300
   shootAble: 1
-  waitBeforeNextShot: 2
+  waitBeforeNextShot: 1.8
 --- !u!195 &2811865344378333945
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -15390,7 +15390,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 2.2
-  m_Speed: 4
+  m_Speed: 5
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -15419,6 +15419,7 @@ MonoBehaviour:
   health: 50
   immortal: 0
   smokeEffect: {fileID: 561573161702643483}
+  audioComp: {fileID: 0}
   Score: 100
 --- !u!95 &1154450941074381762
 Animator:

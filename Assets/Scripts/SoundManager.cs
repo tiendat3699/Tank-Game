@@ -7,7 +7,10 @@ public enum Sounds {
     explosionSound,
     engineIdle,
     TireScreeching,
-    engineRunning
+    engineRunning,
+    Notification,
+    StartSound01,
+    StartSound02
 }
 
 [RequireComponent(typeof(AudioSource))]

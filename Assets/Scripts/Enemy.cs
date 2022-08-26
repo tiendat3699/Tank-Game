@@ -18,7 +18,7 @@ public class Enemy : Target
             health -= damage;
             if(health<=0) {
                 die(vector);
-                gameManager.setScore(Score, gameObject);
+                gameManager.setScore(Score);
             }
             _getHit = true;
         } 

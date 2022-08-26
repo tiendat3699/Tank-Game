@@ -40,9 +40,11 @@ public class ControlPlayer : MonoBehaviour
     private AudioSource audioSource; 
     private AudioSource audioSourceRuning; 
     private AudioSource audioSourceDrift; 
+    private bool enabledControl = false;
 
     private void Awake() {
         rigidbodyTank = GetComponent<Rigidbody>();
+        GameManager.Instance.onStartGame.AddListener(()=> enabledControl = true);
     }
     void Start()
     {
@@ -53,16 +55,17 @@ public class ControlPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        controlCannon();
-        
-        if (Input.GetKey(KeyCode.Mouse0)) {
-            Transform camT = Cam.GetComponent<CameraFollow>().GetTransformCam();
-            Ray ray = new Ray(camT.position, camT.forward);
-            GetComponent<Shooting>().PlayerShoot(ray);
+        if(enabledControl) {
+            controlCannon();
+            
+            if (Input.GetKey(KeyCode.Mouse0)) {
+                Transform camT = Cam.GetComponent<CameraFollow>().GetTransformCam();
+                Ray ray = new Ray(camT.position, camT.forward);
+                GetComponent<Shooting>().PlayerShoot(ray);
+            }
+
+            isBraking = Input.GetKey(KeyCode.Space);
         }
-
-        isBraking = Input.GetKey(KeyCode.Space);
-
         activeSound();
     }
 

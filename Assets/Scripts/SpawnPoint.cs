@@ -9,14 +9,12 @@ public class SpawnPoint : MonoBehaviour
     // Start is called before the first frame update
     private void Awake() {
         gameManager = GameManager.Instance;
+        gameManager.onStartGame.AddListener(startSpawnEnemy);
     }
     void Start()
     {
         gameManager.SetSpawnPoint(transform);
         listEnemy = gameManager.listEnemy;
-
-        int enemyIndex = Random.Range(0, listEnemy.Length - 1);
-        Instantiate(listEnemy[enemyIndex], transform.position, transform.rotation);
     }
 
     // Update is called once per frame
@@ -24,4 +22,12 @@ public class SpawnPoint : MonoBehaviour
     {
         
     }
+
+    private void startSpawnEnemy() {
+        int enemyIndex = Random.Range(0, listEnemy.Length - 1);
+        Instantiate(listEnemy[enemyIndex], transform.position, transform.rotation);
+    }
+
+
+
 }

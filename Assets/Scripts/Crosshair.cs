@@ -6,12 +6,16 @@ public class Crosshair : MonoBehaviour
 {
 
     public Transform FollowTarget;
-
+    
+    private void Awake() {
+        gameObject.SetActive(false);
+        GameManager.Instance.onStartGame.AddListener(()=> gameObject.SetActive(true));
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+    }
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     // Update is called once per frame

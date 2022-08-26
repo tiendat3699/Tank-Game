@@ -7,6 +7,7 @@ using UnityEngine.Events;
 public class Player : Target
 {
     // Start is called before the first frame update
+    [HideInInspector]
     public UnityEvent<float> onTakeDamage;
     protected override void InitStart()
     {
@@ -23,5 +24,11 @@ public class Player : Target
                 die(vector);
             }
         } 
+    }
+
+    protected override void die(Vector3 vector) {
+        gameObject.SetActive(false);
+        GameObject deadBody = Instantiate(DeadTank, transform.position, transform.rotation);
+        deadBody.GetComponent<detroyed>().explode(vector);
     }
 }
