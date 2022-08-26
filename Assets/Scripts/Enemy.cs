@@ -39,4 +39,6 @@ public class Enemy : Target
         _getHit = false;
     }
 
+
+
 }
