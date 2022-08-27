@@ -39,4 +39,14 @@ public class Player : Target
         gameManager.setHealth(healing);
         healingEffect.Play();
     }
+
+    public void shield(float time) {
+        immortal = true;
+        StartCoroutine(StartShield(time));
+    }
+
+    IEnumerator StartShield(float time) {
+        yield return new WaitForSeconds(time);
+        immortal = false;
+    }
 }
