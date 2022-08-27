@@ -15,15 +15,11 @@ public class ControlPlayer : MonoBehaviour
     public float brakeForce = 6000;
     [Range(1,5)]
     public float rotateSpeedMouse = 1;
-
     [Range(-50, 50)]
     public float rotateXRangeMax = 30f;
-
      [Range(-50, 50)]
     public float rotateXRangeMin = -30f;
-
     private float rotationYCanon = 0f;
-
     public Transform BackRightWheelTransform,BackLeftWheelTransform,FrontRightWheelTransform, FrontLeftWheelTransform;
     public WheelCollider BackRightWheelCollider,BackLeftWheelCollider,FrontRightWheelCollider, FrontLeftWheelCollider;
     public Transform Cam;
