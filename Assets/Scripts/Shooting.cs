@@ -81,7 +81,9 @@ public class Shooting : MonoBehaviour
 
                 if(Hit.rigidbody && Hit.transform.tag != transform.tag) {
                     Hit.rigidbody.AddForce(-Hit.normal * 2f, ForceMode.VelocityChange);
-                    Hit.transform.GetComponent<Player>().TakeDamage(damage,-Hit.normal);
+                    if(Hit.transform.tag == "Player") {
+                        Hit.transform.GetComponent<Player>().TakeDamage(damage,-Hit.normal);
+                    }
                 }
                 Destroy(hitShot,2f);
             } else {

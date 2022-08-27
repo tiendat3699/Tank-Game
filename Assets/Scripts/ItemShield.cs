@@ -5,6 +5,7 @@ using UnityEngine;
 public class ItemShield : MonoBehaviour
 {
     public float time;
+    public Material shieldMaterial;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,7 +21,7 @@ public class ItemShield : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         if(other.gameObject.tag == "Player") {
             SoundManager.Instance.playSound(Sounds.healspell);
-            GameManager.Instance.getPlayer().GetComponent<Player>().shield(time);
+            GameManager.Instance.getPlayer().GetComponent<Player>().shield(time, shieldMaterial);
             Destroy(gameObject);
         }
     }

@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
     public GameObject[] listEnemy;
     public GameObject[] listItem;
+    public Material shieldMat;
     public int maxEnemiesAmount;
     private int _enemiesAmount = 0;
     private int _enemiesCurrent = 0;
@@ -64,6 +65,7 @@ public class GameManager : MonoBehaviour
         if(timeCount == -1) {
             onStartGame?.Invoke();
             timeCount -= 1;
+            _player.GetComponent<Player>().shield(5f, shieldMat);
         }
 
         if(_enemiesAmount >= maxEnemiesAmount && _enemiesCurrent == 0) {
@@ -238,7 +240,7 @@ public class GameManager : MonoBehaviour
     }
 
     IEnumerator AutoSpawnItemYield() {
-        yield return new WaitForSeconds(10f);
+        yield return new WaitForSeconds(20f);
         AddRandomItem();
     }
 }

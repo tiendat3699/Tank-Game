@@ -982,7 +982,10 @@ MonoBehaviour:
   listEnemy:
   - {fileID: 3964677239301294235, guid: 0c901844120484d4697fe260839143b3, type: 3}
   listItem:
+  - {fileID: 8328014666511798273, guid: 0b54e8427c7a7ad46b2e1b0210281cdb, type: 3}
+  - {fileID: 8328014666511798273, guid: 39962bdfb9297e14f9b72a58f0126210, type: 3}
   - {fileID: 8328014666511798273, guid: d457a43cf7fae954b95ba440e383e687, type: 3}
+  shieldMat: {fileID: 2100000, guid: 7293912559244c646bed6e070364ec50, type: 2}
   maxEnemiesAmount: 10
   onUpdateScore:
     m_PersistentCalls:
