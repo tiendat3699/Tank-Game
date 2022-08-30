@@ -38,7 +38,4 @@ public class Enemy : Target
     public void ResetHit() {
         _getHit = false;
     }
-
-
-
 }

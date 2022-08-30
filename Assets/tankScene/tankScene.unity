@@ -28083,7 +28083,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1406408320}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.9, y: 3.7, z: -53.2}
+  m_LocalPosition: {x: 2.9, y: 3.7, z: -45}
   m_LocalScale: {x: 9.7063, y: 9.7063, z: 9.7063}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -39805,6 +39805,7 @@ MonoBehaviour:
   listEnemy:
   - {fileID: 3964677239301294235, guid: 0c901844120484d4697fe260839143b3, type: 3}
   listItem: []
+  shieldMat: {fileID: 0}
   maxEnemiesAmount: 3
   onUpdateScore:
     m_PersistentCalls:

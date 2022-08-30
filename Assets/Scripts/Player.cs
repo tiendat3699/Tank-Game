@@ -68,7 +68,6 @@ public class Player : Target
             itemEffect.Stop();
             shooting.damage = damageOrigin;
         }));
-
     }
 
     IEnumerator StartActiveItem(float time, Action callback) {

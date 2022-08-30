@@ -35,5 +35,4 @@ public class detroyed : MonoBehaviour
             Destroy(gameObject, 5f);
         }
     }
-
 }

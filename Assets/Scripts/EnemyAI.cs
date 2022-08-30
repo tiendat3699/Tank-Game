@@ -63,7 +63,7 @@ public class EnemyAI : MonoBehaviour
             if(PlayerInSignRange && !PlayerInAttackRange) {
                 DoAction(StateType.CHASE);
             }
-            if(PlayerInAttackRange && PlayerInAttackRange){
+            if(PlayerInSignRange && PlayerInAttackRange){
                 DoAction(StateType.ATTACK);
             }
         }
